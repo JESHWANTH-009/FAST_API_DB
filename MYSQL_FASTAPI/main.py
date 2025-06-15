@@ -48,3 +48,6 @@ for i in cursor.fetchall():
     print(i)
 if  cursor.fetchall() is None:
     print("Empty table")
+
+#closing connection 
+conn.close()
