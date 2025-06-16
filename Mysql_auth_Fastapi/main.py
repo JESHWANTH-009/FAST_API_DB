@@ -1,14 +1,10 @@
 from fastapi import FastAPI
-from database import Base, engine
-from routers import user, item
+from database import engine, Base
 
-Base.metadata.create_all(bind=engine)
+# Import models so they are registered with SQLAlchemy!
+import models
 
 app = FastAPI()
 
-app.include_router(user.router)
-app.include_router(item.router)
-
-@app.get("/")
-def read_root():
-    return {"message": "FastAPI with MySQL & Auth"}
+# This line creates tables for all imported models
+Base.metadata.create_all(bind=engine)

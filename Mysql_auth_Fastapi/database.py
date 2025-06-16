@@ -7,7 +7,16 @@ from dotenv import load_dotenv
 ## Loads environment variables from a .env file into your environment so they can be accessed os.getenv()
 load_dotenv()  ## to load url from .env
 DATABASE_URL = os.getenv("DATABASE_URL")
+# In database.py
+from sqlalchemy.orm import Session
+import models
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 engine = create_engine(DATABASE_URL)  ##db connector
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
