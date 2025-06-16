@@ -17,6 +17,33 @@ def get_db():
 @router.post("/users/", response_model=schemas.UserOut)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = models.User(name=user.name, email=user.email)
+    """conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Check if user with email already exists
+    cursor.execute("SELECT * FROM users WHERE email = %s", (user.email,))
+    existing = cursor.fetchone()
+    if existing:
+        conn.close()
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    # Insert user
+    cursor.execute(
+        "INSERT INTO users (name, email) VALUES (%s, %s)",
+        (user.name, user.email)
+    )
+    conn.commit()
+    user_id = cursor.lastrowid
+
+    # Fetch the newly created user
+    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    new_user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return new_user
+    """
     db.add(db_user)
     db.commit()
     db.refresh(db_user)  # reloads object from db,so it includes fields like id
