@@ -5,7 +5,7 @@ class UserCreate(BaseModel):
     email:EmailStr
     password:str
 
-class Userout(BaseModel): #this is return what output can user see 
+class UserOut(BaseModel): #this is return what output can user see 
     id:int
     username:str
     email:EmailStr
